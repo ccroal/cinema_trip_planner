@@ -7,13 +7,15 @@ class MainContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
-      postcodeSearch: "G467AN",
+      postcodeSearch: '',
       cinemasByPostcode: [],
-      allMovies: []
+      allMoviesAndCinemas: [],
+      uniqueFilmObjects: []
     }
 
     this.loadFilms = this.loadFilms.bind(this);
-    this.getAllFilms()
+    this.getAllFilms = this.getAllFilms.bind(this);
+    this.getUniqueFilmsList = this.getUniqueFilmsList.bind(this);
   }
 
   componentDidMount(){
@@ -25,7 +27,8 @@ class MainContainer extends Component {
     }).then((data) => {
       this.loadFilms(data);
     })
-  }
+    }
+
 
   loadFilms(data){
     const cinemaIds = [];
@@ -33,7 +36,8 @@ class MainContainer extends Component {
       return cinemaIds.push(cinema.id)
     })
     const stringId = cinemaIds.toString();
-    this.getAllFilms(stringId);
+    const result = this.getAllFilms(stringId);
+    return result;
   }
 
 
@@ -41,8 +45,19 @@ class MainContainer extends Component {
     const request = new Request();
     const url = 'https://api.cinelist.co.uk/get/times/many/' + ids;
     request.get(url).then((data) => {
-      this.setState({allMovies:data});
+      this.setState({allMoviesAndCinemas:data});
     })
+  }
+
+  getUniqueFilmsList(){
+    const allFilmsAtAllCinemasArrays = [];
+    this.state.allMoviesAndCinemas.results.map((result) => {
+      return allFilmsAtAllCinemasArrays.push(result.listings);
+    })
+
+    const allFilmsAtAllCinemas = allFilmsAtAllCinemasArrays.flat();
+    const uniqueFilms = allFilmsAtAllCinemas.indexOf(allFilmsAtAllCinemas.title);
+    this.setState({uniqueFilmObjects: uniqueFilms})
   }
 
 
