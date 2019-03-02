@@ -8,7 +8,6 @@ class MainContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
-      postcodeSearch: '',
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
       uniqueFilmObjects: []
@@ -19,17 +18,6 @@ class MainContainer extends Component {
     this.getUniqueFilmsList = this.getUniqueFilmsList.bind(this);
     this.handlePostcodeInput = this.handlePostcodeInput.bind(this);
   }
-
-  componentDidMount(){
-    const request = new Request()
-    const url = 'https://api.cinelist.co.uk/search/cinemas/postcode/' + this.state.postcodeSearch;
-    request.get(url).then((data) => {
-      this.setState({cinemasByPostcode: data});
-      return data;
-    }).then((data) => {
-      this.loadFilms(data);
-    })
-    }
 
 
   loadFilms(data){
@@ -63,14 +51,25 @@ class MainContainer extends Component {
   }
 
   handlePostcodeInput(postcode) {
-    this.setState({ postcodeSearch: postcode });
+    const request = new Request();
+    console.log('postcode: ', postcode);
+    const url = 'https://api.cinelist.co.uk/search/cinemas/postcode/' + postcode;
+    console.log(url);
+    request.get(url).then((data) => {
+      this.setState({cinemasByPostcode: data});
+      console.log(data);
+      return data;
+    })
+    .then((data) => {
+      this.loadFilms(data);
+    })
   }
 
   render() {
     return (
       <div>
-        <MainHeader title="This is our app!" />
-        <Search onPostcodeSubmit={this.handlePostcodeInput}/>
+      <MainHeader title="This is our app!" />
+      <Search onPostcodeSubmit={this.handlePostcodeInput}/>
       </div>
     );
   }

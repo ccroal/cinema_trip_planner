@@ -19,7 +19,8 @@ class Search extends Component {
     }
     const regex = / /g;
     const amendedPostcode = postcode.replace(regex, '');
-    this.props.onPostcodeSubmit({ postcode: amendedPostcode });
+    this.props.onPostcodeSubmit( amendedPostcode );
+    console.log('amendedPostcode:', amendedPostcode);
     this.setState({ postcode: '' });
   }
 
