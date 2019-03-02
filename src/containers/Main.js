@@ -10,7 +10,7 @@ class MainContainer extends Component {
     this.state = {
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
-      uniqueFilmObjects: []
+      uniqueFilmNames: []
     }
 
     this.loadFilms = this.loadFilms.bind(this);
@@ -36,18 +36,22 @@ class MainContainer extends Component {
     const url = 'https://api.cinelist.co.uk/get/times/many/' + ids;
     request.get(url).then((data) => {
       this.setState({allMoviesAndCinemas:data});
+      return data;
+    }).then((result) => {
+      this.getUniqueFilmsList(result);
     })
   }
 
-  getUniqueFilmsList(){
+  getUniqueFilmsList(allFilmsAndCinemasData){
     const allFilmsAtAllCinemasArrays = [];
-    this.state.allMoviesAndCinemas.results.map((result) => {
+    allFilmsAndCinemasData.results.map((result) => {
       return allFilmsAtAllCinemasArrays.push(result.listings);
     })
-
     const allFilmsAtAllCinemas = allFilmsAtAllCinemasArrays.flat();
-    const uniqueFilms = allFilmsAtAllCinemas.indexOf(allFilmsAtAllCinemas.title);
-    this.setState({uniqueFilmObjects: uniqueFilms})
+    console.log('all', allFilmsAtAllCinemas);
+    const uniqueFilms = [...new Set(allFilmsAtAllCinemas.map(film => film.title))];
+    console.log('unique', uniqueFilms);
+    this.setState({uniqueFilmNames: uniqueFilms})
   }
 
   handlePostcodeInput(postcode) {
