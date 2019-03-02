@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import MainContainer from './containers/Main.js';
 import './App.css';
 
+
 class App extends Component {
+
   render() {
     return (
-
-      <h1>This is our app</h1>
+      <MainContainer />
     );
   }
 }
