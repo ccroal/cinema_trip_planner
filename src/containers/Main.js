@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import Request from '../helpers/request'
-
+import Request from '../helpers/request';
+import Search from '../components/main/Search.js';
+import MainHeader from '../components/main/MainHeader.js';
 
 class MainContainer extends Component {
 
@@ -16,6 +17,7 @@ class MainContainer extends Component {
     this.loadFilms = this.loadFilms.bind(this);
     this.getAllFilms = this.getAllFilms.bind(this);
     this.getUniqueFilmsList = this.getUniqueFilmsList.bind(this);
+    this.handlePostcodeInput = this.handlePostcodeInput.bind(this);
   }
 
   componentDidMount(){
@@ -60,11 +62,17 @@ class MainContainer extends Component {
     this.setState({uniqueFilmObjects: uniqueFilms})
   }
 
+  handlePostcodeInput(postcode) {
+    this.setState({ postcodeSearch: postcode });
+  }
 
-  render(){
-    return(
-    <h1>This is our main Container</h1>
-    )
+  render() {
+    return (
+      <div>
+        <MainHeader title="This is our app!" />
+        <Search onPostcodeSubmit={this.handlePostcodeInput}/>
+      </div>
+    );
   }
 }
 
