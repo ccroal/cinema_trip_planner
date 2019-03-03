@@ -3,6 +3,7 @@ import Request from '../helpers/request';
 import Search from '../components/main/Search.js';
 import MainHeader from '../components/main/MainHeader.js';
 import PostcodeSearchResult from './PostcodeSearchResult.js';
+import CinemaSearchResult from './CinemaSearchResult.js';
 // import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 class MainContainer extends Component {
@@ -77,10 +78,11 @@ class MainContainer extends Component {
     const selectedCinema = this.state.allMoviesAndCinemas.results.map((result)=>{
       if(result.cinema === cinema_id){
         console.log(result);
+        this.setState({currentCinema: result.listings});
         return result
       }
     })
-    this.setState({currentCinema: result});
+
     console.log('cinema id in main:', cinema_id);
   }
 
