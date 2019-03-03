@@ -11,7 +11,7 @@ const CinemaSearchResult = (props) => {
     return (
 
       <li className="screening-list-item">
-      {film.title}
+      <FilmScreenings title={film.title} times={film.times}/>
       </li>
   )
   })
