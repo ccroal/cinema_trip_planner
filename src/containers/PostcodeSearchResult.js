@@ -10,13 +10,11 @@ class PostcodeSearchResult extends Component {
     }
   };
 
-  // passed the list of local cinemas and unique film titles from parent
-
   render() {
     return(
       <div>
       <CinemaPostcodeSearchList localCinemas={this.props.cinemaList}/>
-      <FilmPostcodeSearchList uniqueLocalFilms={this.props.uniqueFilms}/>
+
       </div>
     );
   }
@@ -24,3 +22,6 @@ class PostcodeSearchResult extends Component {
 }
 
 export default PostcodeSearchResult;
+
+
+// <FilmPostcodeSearchList uniqueLocalFilms={this.props.uniqueFilms}/>

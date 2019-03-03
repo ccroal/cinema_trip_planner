@@ -1,8 +1,15 @@
 import React, {Component, Fragment} from 'react';
 import Request from '../helpers/request';
-import Search from '../components/main/Search.js';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 import MainHeader from '../components/main/MainHeader.js';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import Search from '../components/main/Search.js';
+import Quote from '../components/main/Quote.js';
+
+import PostcodeSearchResult from './PostcodeSearchResult.js';
+import CinemaSearchResult from './CinemaSearchResult.js';
+import FilmSearchResult from './FilmSearchResult.js';
+import SelectedScreening from './SelectedScreening.js';
 
 class MainContainer extends Component {
 
@@ -51,7 +58,7 @@ class MainContainer extends Component {
     const allFilmsAtAllCinemas = allFilmsAtAllCinemasArrays.flat();
     console.log('all', allFilmsAtAllCinemas);
     const uniqueFilms = [...new Set(allFilmsAtAllCinemas.map(film => film.title))];
-    console.log('unique', uniqueFilms);
+    uniqueFilms.sort();
     this.setState({uniqueFilmNames: uniqueFilms})
   }
 
@@ -67,8 +74,12 @@ class MainContainer extends Component {
     })
     .then((data) => {
       this.loadFilms(data);
+      console.log(data);
     })
-  }
+    .then(() => {
+      window.location = '/location/' + data.postcode 
+    })
+    }
 
   render() {
     return (
@@ -76,16 +87,24 @@ class MainContainer extends Component {
       <Fragment>
         <MainHeader title="This is our app!" />
         <Search onPostcodeSubmit={this.handlePostcodeInput}/>
-        <Route exact path="/" component={Quote} />
-        <Route exact path="/location/:postcode" component={PostcodeSearchResult} />
-        <Route exact path="/location/:postcode/cinema/:cinema_id" component={CinemaSearchResult} />
-        <Route exact path="/location/:postcode/film/:title" component={FilmSearchResult} />
-        <Route exact path="/location/:postcode/cinema/:cinema_id/film/:title/time/:time" component={SelectedScreening} />
-        </ Fragment>
-        </Router>
+        <Switch>
+        <Route exact path="/location/:postcode"
+                  render={() => <PostcodeSearchResult
+                    cinemas={this.state.cinemasByPostcode}
+                    titles={this.state.uniqueFilmNames} />} />
+        </Switch>
+      </ Fragment>
+      </Router>
     );
   }
 }
 
 
 export default MainContainer;
+
+
+//   <Route exact path="/" component={Quote} />
+
+//   <Route exact path="/location/:postcode/cinema/:cinema_id" component={CinemaSearchResult} />
+//   <Route exact path="/location/:postcode/film/:title" component={FilmSearchResult} />
+//   <Route exact path="/location/:postcode/cinema/:cinema_id/film/:title/time/:time" component={SelectedScreening} />
