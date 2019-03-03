@@ -5,27 +5,40 @@ const CinemaTimes = (props) => {
       return null
     }
 
-    // function getTimes(){
-    // const listingsData =[];
-    // console.log('Results', props.cinemaInformation.allMoviesAndCinemas.results);
-    // props.cinemaInformation.allMoviesAndCinemas.results.map((cinemaObject)=>{
-    //   if(props.cinemaInformation.selectedFilm == props.cinemaInformation.allMoviesAndCinemas.listings.title){
-    //     return listingsData.push(cinemaObject.cinema)
-    //     }
-    //   })
-    //   console.log('End', listingsData);
-    //   return listingsData;
-    //
-    // }
+    //Returns an array of objects with cinema Id and all showtimes
+    function getTimesandId(){
+      const listingsData = []
+
+      props.cinemaInformation.allMoviesAndCinemas.results.map((cinemaObject)=>{
+      cinemaObject.listings.map((listing) => {
+      if(props.cinemaInformation.selectedFilm === listing.title){
+        listingsData.push({cinemaid: cinemaObject.cinema, listings: listing})
+        }
+      })
+    })
+      console.log('End', listingsData);
+      return listingsData;
+    }
+
+    
+    function getTimes(timesAndId){
+      const times = timesAndId.map((listingObject) => {
+        return listingObject.listings.times})
+      return times;
+    }
+
+    function getId(timesAndId){
+      const ids = timesAndId.map((listingObject) => {
+        return listingObject.cinemaid})
+      }
 
     function displayTimes(){
-      const cinemasAndTimes = [];
-      console.log('the end',cinemasAndTimes);
+      const cinemasIdAndTimes = getTimesandId()
     }
 
 
       return(
-        <p>Hello</p>
+        <p>{displayTimes()}</p>
       )
 }
 
