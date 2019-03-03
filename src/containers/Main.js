@@ -7,6 +7,7 @@ import MainHeader from '../components/main/MainHeader.js';
 // import Quote from '../components/main/Quote.js';
 
 import PostcodeSearchResult from './PostcodeSearchResult.js';
+import CinemaTimes from '../components/film_search/CinemaTimes';
 // import CinemaSearchResult from './CinemaSearchResult.js';
 // import FilmSearchResult from './FilmSearchResult.js';
 // import SelectedScreening from './SelectedScreening.js';
@@ -89,7 +90,7 @@ class MainContainer extends Component {
       <MainHeader title="This is our app!" />
       <Search onPostcodeSubmit={this.handlePostcodeInput}/>
       <PostcodeSearchResult uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
-      <<CinemaTimes selectedFilm={this.state.selectedFilm}/>
+      <CinemaTimes cinemaInformation={this.state}  />
     </div>
     )
   }
