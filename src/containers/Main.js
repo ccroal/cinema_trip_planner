@@ -1,8 +1,15 @@
 import React, {Component, Fragment} from 'react';
 import Request from '../helpers/request';
+// import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 import Search from '../components/main/Search.js';
 import MainHeader from '../components/main/MainHeader.js';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+// import Quote from '../components/main/Quote.js';
+
+import PostcodeSearchResult from './PostcodeSearchResult.js';
+// import CinemaSearchResult from './CinemaSearchResult.js';
+// import FilmSearchResult from './FilmSearchResult.js';
+// import SelectedScreening from './SelectedScreening.js';
 
 class MainContainer extends Component {
 
@@ -11,13 +18,15 @@ class MainContainer extends Component {
     this.state = {
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
-      uniqueFilmNames: []
+      uniqueFilmNames: [],
+      selectedFilm: null
     }
 
     this.loadFilms = this.loadFilms.bind(this);
     this.getAllFilms = this.getAllFilms.bind(this);
     this.getUniqueFilmsList = this.getUniqueFilmsList.bind(this);
     this.handlePostcodeInput = this.handlePostcodeInput.bind(this);
+    this.handleFilmChange = this.handleFilmChange.bind(this);
   }
 
 
@@ -51,7 +60,7 @@ class MainContainer extends Component {
     const allFilmsAtAllCinemas = allFilmsAtAllCinemasArrays.flat();
     console.log('all', allFilmsAtAllCinemas);
     const uniqueFilms = [...new Set(allFilmsAtAllCinemas.map(film => film.title))];
-    console.log('unique', uniqueFilms);
+    uniqueFilms.sort();
     this.setState({uniqueFilmNames: uniqueFilms})
   }
 
@@ -70,21 +79,31 @@ class MainContainer extends Component {
     })
   }
 
+  handleFilmChange(film){
+    this.setState({selectedFilm: film})
+  }
+
   render() {
     return (
-      <Router>
-      <Fragment>
-        <MainHeader title="This is our app!" />
-        <Search onPostcodeSubmit={this.handlePostcodeInput}/>
-        <Route exact path="/" component={Quote} />
-        <Route exact path="/location/:postcode" component={PostcodeSearchResult} />
-        <Route exact path="/location/:postcode/cinema/:cinema_id" component={CinemaSearchResult} />
-        <Route exact path="/location/:postcode/film/:title" component={FilmSearchResult} />
-        <Route exact path="/location/:postcode/cinema/:cinema_id/film/:title/time/:time" component={SelectedScreening} />
-        </ Fragment>
-        </Router>
-    );
+    <div>
+      <MainHeader title="This is our app!" />
+      <Search onPostcodeSubmit={this.handlePostcodeInput}/>
+      <PostcodeSearchResult uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
+      <<CinemaTimes selectedFilm={this.state.selectedFilm}/>
+    </div>
+    )
   }
+
+  // <Router>
+  // <Fragment>
+  //
+  //   <Route exact path="/" component={Quote} />
+  //   <Route exact path="/location/:postcode" component={PostcodeSearchResult} />
+  //   <Route exact path="/location/:postcode/cinema/:cinema_id" component={CinemaSearchResult} />
+  //   <Route exact path="/location/:postcode/film/:title" component={FilmSearchResult} />
+  //   <Route exact path="/location/:postcode/cinema/:cinema_id/film/:title/time/:time" component={SelectedScreening} />
+  //   </ Fragment>
+  //   </Router>
 }
 
 
