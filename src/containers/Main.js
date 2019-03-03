@@ -13,13 +13,14 @@ class MainContainer extends Component {
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
       uniqueFilmNames: [],
-      currentCinemaId: null
+      currentCinema: null
     }
 
     this.loadFilms = this.loadFilms.bind(this);
     this.getAllFilms = this.getAllFilms.bind(this);
     this.getUniqueFilmsList = this.getUniqueFilmsList.bind(this);
     this.handlePostcodeInput = this.handlePostcodeInput.bind(this);
+    this.handleCinemaSelected = this.handleCinemaSelected.bind(this);
   }
 
 
@@ -73,7 +74,14 @@ class MainContainer extends Component {
   }
 
   handleCinemaSelected(cinema_id){
-    this.setState({currentCinemaId: cinema_id});
+    const selectedCinema = this.state.allMoviesAndCinemas.results.map((result)=>{
+      if(result.cinema === cinema_id){
+        console.log(result);
+        return result
+      }
+    })
+    this.setState({currentCinema: result});
+    console.log('cinema id in main:', cinema_id);
   }
 
   render() {
@@ -82,8 +90,8 @@ class MainContainer extends Component {
         <MainHeader title="This is our app!" />
         <Search onPostcodeSubmit={this.handlePostcodeInput}/>
         <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
-        onCinemaSelected={this.handleCinemaSelected}
-    />
+        onCinemaSelected={this.handleCinemaSelected}/>
+        <CinemaSearchResult cinemaScreenings= {this.state.currentCinema}/>
         </div>
     );
   }

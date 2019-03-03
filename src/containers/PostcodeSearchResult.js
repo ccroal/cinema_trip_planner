@@ -10,7 +10,7 @@ const PostcodeSearchResult = (props) => {
 
   function handleCinemaChange(event){
     props.onCinemaSelected(event.target.value);
-    console.log(event.target.value);
+    console.log('cinemaId', event.target.value);
   }
 
 return(
