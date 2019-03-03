@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Request from '../helpers/request';
 import Search from '../components/main/Search.js';
 import MainHeader from '../components/main/MainHeader.js';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 class MainContainer extends Component {
 
@@ -71,10 +72,17 @@ class MainContainer extends Component {
 
   render() {
     return (
-      <div>
-      <MainHeader title="This is our app!" />
-      <Search onPostcodeSubmit={this.handlePostcodeInput}/>
-      </div>
+      <Router>
+      <Fragment>
+        <MainHeader title="This is our app!" />
+        <Search onPostcodeSubmit={this.handlePostcodeInput}/>
+        <Route exact path="/" component={Quote} />
+        <Route exact path="/location/:postcode" component={PostcodeSearchResult} />
+        <Route exact path="/location/:postcode/cinema/:cinema_id" component={CinemaSearchResult} />
+        <Route exact path="/location/:postcode/film/:title" component={FilmSearchResult} />
+        <Route exact path="/location/:postcode/cinema/:cinema_id/film/:title/time/:time" component={SelectedScreening} />
+        </ Fragment>
+        </Router>
     );
   }
 }
