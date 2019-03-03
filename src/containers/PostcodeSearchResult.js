@@ -2,25 +2,27 @@ import React, { Component } from 'react';
 import CinemaPostcodeSearchList from '../components/postcode_search/CinemaPostcodeSearchList.js';
 import FilmPostcodeSearchList from '../components/postcode_search/FilmPostcodeSearchList.js';
 
-class PostcodeSearchResult extends Component {
+const PostcodeSearchResult = (props) => {
 
-  constructor(props){
-    super(props);
-    this.state = {
-    }
-  };
+  const cinemas = props.cinemaList.map((cinema) => {
+    return <option value={cinema.id}>{cinema.name},{cinema.distance} miles</option>
+  })
 
-  // passed the list of local cinemas and unique film titles from parent
-
-  render() {
-    return(
-      <div>
-      <CinemaPostcodeSearchList localCinemas={this.props.cinemaList}/>
-      <FilmPostcodeSearchList uniqueLocalFilms={this.props.uniqueFilms}/>
-      </div>
-    );
+  function handleCinemaChange(event){
+    props.onCinemaSelected(event.target.value);
+    console.log(event.target.value);
   }
 
-}
+return(
+      <select id="cinema-selector" defaultValue="default"
+      onChange={handleCinemaChange}>
+      <option disabled value="default">Choose a Cinema</option>
+      {cinemas}
+      </select>
+)
 
-export default PostcodeSearchResult;
+
+  }
+
+
+  export default PostcodeSearchResult;
