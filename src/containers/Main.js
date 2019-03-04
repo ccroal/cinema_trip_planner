@@ -1,10 +1,19 @@
 import React, {Component, Fragment} from 'react';
 import Request from '../helpers/request';
+// import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 import Search from '../components/main/Search.js';
 import MainHeader from '../components/main/MainHeader.js';
+// import Quote from '../components/main/Quote.js';
+
 import PostcodeSearchResult from './PostcodeSearchResult.js';
+import CinemaTimes from '../components/film_search/CinemaTimes';
 import CinemaSearchResult from './CinemaSearchResult.js';
+// import FilmSearchResult from './FilmSearchResult.js';
+// import SelectedScreening from './SelectedScreening.js';
+
 // import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 
 class MainContainer extends Component {
 
@@ -14,6 +23,7 @@ class MainContainer extends Component {
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
       uniqueFilmNames: [],
+      selectedFilm: null,
       currentCinema: null
     }
 
@@ -21,6 +31,7 @@ class MainContainer extends Component {
     this.getAllFilms = this.getAllFilms.bind(this);
     this.getUniqueFilmsList = this.getUniqueFilmsList.bind(this);
     this.handlePostcodeInput = this.handlePostcodeInput.bind(this);
+    this.handleFilmChange = this.handleFilmChange.bind(this);
     this.handleCinemaSelected = this.handleCinemaSelected.bind(this);
   }
 
@@ -55,7 +66,7 @@ class MainContainer extends Component {
     const allFilmsAtAllCinemas = allFilmsAtAllCinemasArrays.flat();
     console.log('all', allFilmsAtAllCinemas);
     const uniqueFilms = [...new Set(allFilmsAtAllCinemas.map(film => film.title))];
-    console.log('unique', uniqueFilms);
+    uniqueFilms.sort();
     this.setState({uniqueFilmNames: uniqueFilms})
   }
 
@@ -74,6 +85,11 @@ class MainContainer extends Component {
     })
   }
 
+
+  handleFilmChange(film){
+    this.setState({selectedFilm: film})
+  }
+
   handleCinemaSelected(cinema_id){
     const selectedCinema = this.state.allMoviesAndCinemas.results.map((result)=>{
       if(result.cinema === cinema_id){
@@ -82,7 +98,6 @@ class MainContainer extends Component {
         return result
       }
     })
-
     console.log('cinema id in main:', cinema_id);
   }
 
@@ -92,11 +107,23 @@ class MainContainer extends Component {
         <MainHeader title="This is our app!" />
         <Search onPostcodeSubmit={this.handlePostcodeInput}/>
         <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
-        onCinemaSelected={this.handleCinemaSelected}/>
-        <CinemaSearchResult cinemaScreenings= {this.state.currentCinema}/>
+        onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
+        <CinemaSearchResult cinemaScreenings={this.state.currentCinema} />
+        <CinemaTimes cinemaInformation={this.state} />
         </div>
     );
   }
+
+  // <Router>
+  // <Fragment>
+  //
+  //   <Route exact path="/" component={Quote} />
+  //   <Route exact path="/location/:postcode" component={PostcodeSearchResult} />
+  //   <Route exact path="/location/:postcode/cinema/:cinema_id" component={CinemaSearchResult} />
+  //   <Route exact path="/location/:postcode/film/:title" component={FilmSearchResult} />
+  //   <Route exact path="/location/:postcode/cinema/:cinema_id/film/:title/time/:time" component={SelectedScreening} />
+  //   </ Fragment>
+  //   </Router>
 }
 
 
