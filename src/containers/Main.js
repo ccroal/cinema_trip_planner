@@ -2,7 +2,9 @@ import React, {Component, Fragment} from 'react';
 import Request from '../helpers/request';
 import Search from '../components/main/Search.js';
 import MainHeader from '../components/main/MainHeader.js';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import PostcodeSearchResult from './PostcodeSearchResult.js';
+import CinemaSearchResult from './CinemaSearchResult.js';
+// import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 class MainContainer extends Component {
 
@@ -11,13 +13,15 @@ class MainContainer extends Component {
     this.state = {
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
-      uniqueFilmNames: []
+      uniqueFilmNames: [],
+      currentCinema: null
     }
 
     this.loadFilms = this.loadFilms.bind(this);
     this.getAllFilms = this.getAllFilms.bind(this);
     this.getUniqueFilmsList = this.getUniqueFilmsList.bind(this);
     this.handlePostcodeInput = this.handlePostcodeInput.bind(this);
+    this.handleCinemaSelected = this.handleCinemaSelected.bind(this);
   }
 
 
@@ -61,7 +65,7 @@ class MainContainer extends Component {
     const url = 'https://api.cinelist.co.uk/search/cinemas/postcode/' + postcode;
     console.log(url);
     request.get(url).then((data) => {
-      this.setState({cinemasByPostcode: data});
+      this.setState({cinemasByPostcode: data.cinemas});
       console.log(data);
       return data;
     })
@@ -70,19 +74,27 @@ class MainContainer extends Component {
     })
   }
 
+  handleCinemaSelected(cinema_id){
+    const selectedCinema = this.state.allMoviesAndCinemas.results.map((result)=>{
+      if(result.cinema === cinema_id){
+        console.log(result);
+        this.setState({currentCinema: result.listings});
+        return result
+      }
+    })
+
+    console.log('cinema id in main:', cinema_id);
+  }
+
   render() {
     return (
-      <Router>
-      <Fragment>
+        <div>
         <MainHeader title="This is our app!" />
         <Search onPostcodeSubmit={this.handlePostcodeInput}/>
-        <Route exact path="/" component={Quote} />
-        <Route exact path="/location/:postcode" component={PostcodeSearchResult} />
-        <Route exact path="/location/:postcode/cinema/:cinema_id" component={CinemaSearchResult} />
-        <Route exact path="/location/:postcode/film/:title" component={FilmSearchResult} />
-        <Route exact path="/location/:postcode/cinema/:cinema_id/film/:title/time/:time" component={SelectedScreening} />
-        </ Fragment>
-        </Router>
+        <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
+        onCinemaSelected={this.handleCinemaSelected}/>
+        <CinemaSearchResult cinemaScreenings= {this.state.currentCinema}/>
+        </div>
     );
   }
 }
