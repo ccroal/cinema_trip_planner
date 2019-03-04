@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import SelectedScreeningComponent from '../components/final_results/SelectedScreeningComponent.js';
 
-class SelectedScreeningContainer extends Component {
+const SelectedScreeningContainer = (props) => {
 
-  constructor(props){
-    super(props);
-    this.state = {}
+  if(!props.selectedFinalObject){
+    return null;
   }
 
-  render(){
-    return (
-      <div>
-        <SelectedScreeningComponent selectedScreeningTime={this.props.selectedScreening}/>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <SelectedScreeningComponent finalObject={props.selectedFinalObject}/>
+    </div>
+  )
 }
 
 export default SelectedScreeningContainer;

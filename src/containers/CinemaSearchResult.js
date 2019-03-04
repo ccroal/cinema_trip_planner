@@ -7,15 +7,15 @@ const CinemaSearchResult = (props) => {
     return null;
   }
 
-  function handleScreeningSelection(time) {
-    props.handleTimeSelection(time);
+  function handleScreeningSelection(time, filmTitle, cinema_id) {
+    props.handleTimeSelection(time, filmTitle, cinema_id);
   }
 
   const screenings = props.cinemaScreenings.map((film, index) => {
     return (
 
       <li className="screening-list-item" key={index}>
-      <FilmScreenings title={film.title} times={film.times} handleScreeningSelection={handleScreeningSelection}/>
+      <FilmScreenings title={film.title} times={film.times} handleScreeningSelection={handleScreeningSelection} cinema_id={props.selectedCinema.id}/>
       </li>
   )
   })
@@ -23,7 +23,7 @@ const CinemaSearchResult = (props) => {
 
 return (
   <div>
-  <p>Please select a screening time for {props.cinemaName.name} below:</p>
+  <p>Please select a screening time for {props.selectedCinema.name} below:</p>
   <ul className="screenings-list">
     {screenings}
     </ul>
