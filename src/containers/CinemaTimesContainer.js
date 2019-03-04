@@ -19,10 +19,14 @@ const CinemaTimesContainer = (props) => {
         })
       })
 
+      function handleSelectedTime(time, filmTitle, cinema_id){
+        props.handleTimeSelection(time, filmTitle, cinema_id);
+      }
+
     return(
         <ul className="cinema-and-times-list">
-        <li className="cinema-and-times-list-itme">
-          <CinemaAndTimesList allListingsData={listingsData} allCinemaData={allCinemas}/>
+          <li className="cinema-and-times-list-itme">
+          <CinemaAndTimesList allListingsData={listingsData} allCinemaData={allCinemas} timeSelection={handleSelectedTime}/>
           </li>
         </ul>
     )

@@ -12,9 +12,14 @@ const CinemaAndTimes = (props) => {
 
   }
 
+  const onSelection = (event) => {
+    event.preventDefault()
+    props.timeSelection(event.target.value, props.cinemaAndTimes.listings.title, props.cinemaAndTimes.cinemaid, )
+  }
+
   function displayScreenings(){
-    const times = props.cinemaAndTimes.listings.times.map((time) => {
-    return <li>{time}</li>
+    const times = props.cinemaAndTimes.listings.times.map((time, index) => {
+    return <button onClick={onSelection} value={time} key={index}>{time}</button>
   })
   return times
   }

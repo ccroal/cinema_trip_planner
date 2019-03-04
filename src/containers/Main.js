@@ -149,7 +149,7 @@ class MainContainer extends Component {
 
       <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject}/>
 
-      <CinemaTimesContainer cinemaInformation={this.state} />
+      <CinemaTimesContainer cinemaInformation={this.state} handleTimeSelection={this.handleTimeSelection}/>
 
       </div>
     );
