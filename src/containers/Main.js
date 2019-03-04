@@ -39,6 +39,7 @@ class MainContainer extends Component {
     this.setCinemaListings = this.setCinemaListings.bind(this);
     this.setSelectedCinemaDetails = this.setSelectedCinemaDetails.bind(this);
     this.getSelectedCinemaAddress = this.getSelectedCinemaAddress.bind(this);
+    this.handleTimeSelection = this.handleTimeSelection.bind(this);
   }
 
 
@@ -128,6 +129,10 @@ class MainContainer extends Component {
     this.getSelectedCinemaAddress(cinema_id);
   }
 
+  handleTimeSelection(time){
+    this.setState({selectedScreening: time});
+  }
+
   render() {
     return (
         <div>
@@ -135,7 +140,7 @@ class MainContainer extends Component {
         <Search onPostcodeSubmit={this.handlePostcodeInput}/>
         <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
         onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
-        <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} />
+        <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} />
         <CinemaTimes cinemaInformation={this.state} />
         </div>
     );

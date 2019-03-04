@@ -7,18 +7,19 @@ const CinemaSearchResult = (props) => {
     return null;
   }
 
+  function handleScreeningSelection(time) {
+    props.handleTimeSelection(time);
+  }
+
   const screenings = props.cinemaScreenings.map((film) => {
     return (
 
       <li className="screening-list-item">
-      <FilmScreenings title={film.title} times={film.times} />
+      <FilmScreenings title={film.title} times={film.times} handleScreeningSelection={handleScreeningSelection}/>
       </li>
   )
   })
-// handleScreeningSelection={handleScreeningSelection}
-// function handleScreeningSelection(time) {
-//   console.log(time);
-// }
+
 
 return (
   <div>

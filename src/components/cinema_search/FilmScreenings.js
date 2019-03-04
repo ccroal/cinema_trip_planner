@@ -4,7 +4,7 @@ const FilmScreenings = (props) => {
 
 
   const onSelection = (event) => {
-    console.log(event.target.value);
+    props.handleScreeningSelection(event.target.value)
   }
 
   if(!props.title || !props.times){
@@ -12,6 +12,7 @@ const FilmScreenings = (props) => {
       <p>waiting to load</p>
     )
   }
+
   const allTimings = props.times.map((time) => {
     return <button onClick={onSelection} value={time}>{time}</button>
   })
