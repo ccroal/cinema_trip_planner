@@ -3,7 +3,7 @@ import React from 'react';
 const FilmScreenings = (props) => {
 
   const onSelection = (event) => {
-    props.handleScreeningSelection(event.target.value)
+    props.handleScreeningSelection(event.target.value, props.title, props.cinema_id)
   }
 
   if(!props.title || !props.times){

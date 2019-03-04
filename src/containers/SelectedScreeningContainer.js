@@ -3,13 +3,13 @@ import SelectedScreeningComponent from '../components/final_results/SelectedScre
 
 const SelectedScreeningContainer = (props) => {
 
-  if(!props.selectedCinema || !props.selectedCinemaAddress || !props.selectedScreening){
+  if(!props.selectedFinalObject){
     return null;
   }
 
   return (
     <div>
-      <SelectedScreeningComponent selectedScreeningTime={props.selectedScreening} selectedCinema={props.selectedCinema} selectedCinemaAddress={props.selectedCinemaAddress} />
+      <SelectedScreeningComponent finalObject={props.selectedFinalObject}/>
     </div>
   )
 }

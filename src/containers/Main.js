@@ -24,10 +24,8 @@ class MainContainer extends Component {
       allMoviesAndCinemas: [],
       uniqueFilmNames: [],
       selectedFilm: null,
-      selectedCinema: null,
-      selectedCinemaAddress: null,
-      selectedScreening: null,
-      currentCinemaListings: null
+      currentCinemaListings: null,
+      selectedFinalObject: null
     }
 
     this.loadFilms = this.loadFilms.bind(this);
@@ -38,8 +36,8 @@ class MainContainer extends Component {
     this.handleCinemaSelected = this.handleCinemaSelected.bind(this);
     this.setCinemaListings = this.setCinemaListings.bind(this);
     this.setSelectedCinemaDetails = this.setSelectedCinemaDetails.bind(this);
-    this.getSelectedCinemaAddress = this.getSelectedCinemaAddress.bind(this);
     this.handleTimeSelection = this.handleTimeSelection.bind(this);
+    this.setObject = this.setObject.bind(this);
   }
 
 
@@ -114,41 +112,46 @@ class MainContainer extends Component {
     })
   }
 
-  getSelectedCinemaAddress(cinema_id) {
+  handleTimeSelection(time, filmTitle, cinema_id) {
     const request = new Request();
     const url = "https://api.cinelist.co.uk/get/cinema/" + cinema_id;
     request.get(url).then((data) => {
       console.log(data);
-      this.setState({selectedCinemaAddress: data})
+      return data;
+    }).then((data) => {
+      this.setObject(time, filmTitle, data)
     });
+  }
+
+  setObject(time, filmTitle, cinemaDetails) {
+    const finalObject = {
+      screeningTime: time,
+      filmTitle: filmTitle,
+      cinemaDetails: cinemaDetails
+    }
+    this.setState({selectedFinalObject: finalObject})
   }
 
   handleCinemaSelected(cinema_id){
     this.setCinemaListings(cinema_id);
     this.setSelectedCinemaDetails(cinema_id);
-    this.getSelectedCinemaAddress(cinema_id);
-  }
-
-  handleTimeSelection(time){
-    this.setState({selectedScreening: time});
   }
 
   render() {
     return (
-        <div>
-        <MainHeader title="This is our app!" />
-        <Search onPostcodeSubmit={this.handlePostcodeInput}/>
-        <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
-        onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
+      <div>
+      <MainHeader title="This is our app!" />
+      <Search onPostcodeSubmit={this.handlePostcodeInput}/>
+      <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
+      onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
 
-        <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} cinemaName={this.state.selectedCinema} />
-      
-        <SelectedScreeningContainer selectedFilm={this.state.selectedFilm} selectedCinema={this.state.selectedCinema} selectedCinemaAddress={this.state.selectedCinemaAddress} selectedScreening={this.state.selectedScreening}/>
+      <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} selectedCinema={this.state.selectedCinema} />
 
-        
-        <CinemaTimesContainer cinemaInformation={this.state} />
+      <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject}/>
 
-        </div>
+      <CinemaTimesContainer cinemaInformation={this.state} />
+
+      </div>
     );
   }
 
