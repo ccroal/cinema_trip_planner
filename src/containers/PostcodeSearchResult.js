@@ -12,8 +12,8 @@ const PostcodeSearchResult = (props) => {
     props.onFilmSelected(event.target.value)
   }
 
-  const cinemas = props.cinemaList.map((cinema) => {
-    return <option value={cinema.id}>{cinema.name},{cinema.distance} miles</option>
+  const cinemas = props.cinemaList.map((cinema, index) => {
+    return <option value={cinema.id} key={index}>{cinema.name},{cinema.distance} miles</option>
   })
 
   function handleCinemaChange(event){

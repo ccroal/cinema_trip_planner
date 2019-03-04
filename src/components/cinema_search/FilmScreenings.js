@@ -2,7 +2,6 @@ import React from 'react';
 
 const FilmScreenings = (props) => {
 
-
   const onSelection = (event) => {
     props.handleScreeningSelection(event.target.value)
   }
@@ -13,8 +12,8 @@ const FilmScreenings = (props) => {
     )
   }
 
-  const allTimings = props.times.map((time) => {
-    return <button onClick={onSelection} value={time}>{time}</button>
+  const allTimings = props.times.map((time, index) => {
+    return <button onClick={onSelection} value={time} key={index}>{time}</button>
   })
 
   return (
@@ -25,8 +24,3 @@ const FilmScreenings = (props) => {
   )
 }
 export default FilmScreenings;
-
-
-//for each time,
-// create an a tag
-// add a space
