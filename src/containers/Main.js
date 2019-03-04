@@ -8,9 +8,12 @@ import MainHeader from '../components/main/MainHeader.js';
 
 import PostcodeSearchResult from './PostcodeSearchResult.js';
 import CinemaTimes from '../components/film_search/CinemaTimes';
-// import CinemaSearchResult from './CinemaSearchResult.js';
+import CinemaSearchResult from './CinemaSearchResult.js';
 // import FilmSearchResult from './FilmSearchResult.js';
 // import SelectedScreening from './SelectedScreening.js';
+
+// import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 
 class MainContainer extends Component {
 
@@ -20,7 +23,8 @@ class MainContainer extends Component {
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
       uniqueFilmNames: [],
-      selectedFilm: null
+      selectedFilm: null,
+      currentCinema: null
     }
 
     this.loadFilms = this.loadFilms.bind(this);
@@ -28,6 +32,7 @@ class MainContainer extends Component {
     this.getUniqueFilmsList = this.getUniqueFilmsList.bind(this);
     this.handlePostcodeInput = this.handlePostcodeInput.bind(this);
     this.handleFilmChange = this.handleFilmChange.bind(this);
+    this.handleCinemaSelected = this.handleCinemaSelected.bind(this);
   }
 
 
@@ -71,7 +76,7 @@ class MainContainer extends Component {
     const url = 'https://api.cinelist.co.uk/search/cinemas/postcode/' + postcode;
     console.log(url);
     request.get(url).then((data) => {
-      this.setState({cinemasByPostcode: data});
+      this.setState({cinemasByPostcode: data.cinemas});
       console.log(data);
       return data;
     })
@@ -80,19 +85,33 @@ class MainContainer extends Component {
     })
   }
 
+
   handleFilmChange(film){
     this.setState({selectedFilm: film})
   }
 
+  handleCinemaSelected(cinema_id){
+    const selectedCinema = this.state.allMoviesAndCinemas.results.map((result)=>{
+      if(result.cinema === cinema_id){
+        console.log(result);
+        this.setState({currentCinema: result.listings});
+        return result
+      }
+    })
+    console.log('cinema id in main:', cinema_id);
+  }
+
   render() {
     return (
-    <div>
-      <MainHeader title="This is our app!" />
-      <Search onPostcodeSubmit={this.handlePostcodeInput}/>
-      <PostcodeSearchResult uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
-      <CinemaTimes cinemaInformation={this.state}  />
-    </div>
-    )
+        <div>
+        <MainHeader title="This is our app!" />
+        <Search onPostcodeSubmit={this.handlePostcodeInput}/>
+        <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
+        onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
+        <CinemaSearchResult cinemaScreenings={this.state.currentCinema} />
+        <CinemaTimes cinemaInformation={this.state} />
+        </div>
+    );
   }
 
   // <Router>
