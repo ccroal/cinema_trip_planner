@@ -10,7 +10,7 @@ import PostcodeSearchResult from './PostcodeSearchResult.js';
 import CinemaTimesContainer from './CinemaTimesContainer';
 import CinemaSearchResult from './CinemaSearchResult.js';
 // import FilmSearchResult from './FilmSearchResult.js';
-// import SelectedScreening from './SelectedScreening.js';
+import SelectedScreeningContainer from './SelectedScreeningContainer.js';
 
 // import {BrowserRouter as Router, Route} from 'react-router-dom';
 
@@ -24,7 +24,10 @@ class MainContainer extends Component {
       allMoviesAndCinemas: [],
       uniqueFilmNames: [],
       selectedFilm: null,
-      currentCinema: null
+      selectedCinema: null,
+      selectedCinemaAddress: null,
+      selectedScreening: null,
+      currentCinemaListings: null
     }
 
     this.loadFilms = this.loadFilms.bind(this);
@@ -33,6 +36,10 @@ class MainContainer extends Component {
     this.handlePostcodeInput = this.handlePostcodeInput.bind(this);
     this.handleFilmChange = this.handleFilmChange.bind(this);
     this.handleCinemaSelected = this.handleCinemaSelected.bind(this);
+    this.setCinemaListings = this.setCinemaListings.bind(this);
+    this.setSelectedCinemaDetails = this.setSelectedCinemaDetails.bind(this);
+    this.getSelectedCinemaAddress = this.getSelectedCinemaAddress.bind(this);
+    this.handleTimeSelection = this.handleTimeSelection.bind(this);
   }
 
 
@@ -85,20 +92,45 @@ class MainContainer extends Component {
     })
   }
 
-
   handleFilmChange(film){
     this.setState({selectedFilm: film})
   }
 
-  handleCinemaSelected(cinema_id){
+  setCinemaListings(cinema_id){
     const selectedCinema = this.state.allMoviesAndCinemas.results.map((result)=>{
       if(result.cinema === cinema_id){
-        console.log(result);
-        this.setState({currentCinema: result.listings});
+        console.log('selected cinema:', result);
+        this.setState({currentCinemaListings: result.listings});
         return result
       }
     })
-    console.log('cinema id in main:', cinema_id);
+  }
+
+  setSelectedCinemaDetails(cinema_id){
+    const selectedCinemaInfo = this.state.cinemasByPostcode.map((cinema) => {
+      if(cinema.id === cinema_id) {
+        this.setState({selectedCinema: cinema})
+      }
+    })
+  }
+
+  getSelectedCinemaAddress(cinema_id) {
+    const request = new Request();
+    const url = "https://api.cinelist.co.uk/get/cinema/" + cinema_id;
+    request.get(url).then((data) => {
+      console.log(data);
+      this.setState({selectedCinemaAddress: data})
+    });
+  }
+
+  handleCinemaSelected(cinema_id){
+    this.setCinemaListings(cinema_id);
+    this.setSelectedCinemaDetails(cinema_id);
+    this.getSelectedCinemaAddress(cinema_id);
+  }
+
+  handleTimeSelection(time){
+    this.setState({selectedScreening: time});
   }
 
   render() {
@@ -108,8 +140,14 @@ class MainContainer extends Component {
         <Search onPostcodeSubmit={this.handlePostcodeInput}/>
         <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
         onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
-        <CinemaSearchResult cinemaScreenings={this.state.currentCinema} />
+
+        <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} cinemaName={this.state.selectedCinema} />
+      
+        <SelectedScreeningContainer selectedFilm={this.state.selectedFilm} selectedCinema={this.state.selectedCinema} selectedCinemaAddress={this.state.selectedCinemaAddress} selectedScreening={this.state.selectedScreening}/>
+
+        
         <CinemaTimesContainer cinemaInformation={this.state} />
+
         </div>
     );
   }

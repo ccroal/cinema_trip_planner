@@ -4,23 +4,30 @@ import FilmScreenings from '../components/cinema_search/FilmScreenings.js';
 const CinemaSearchResult = (props) => {
 
   if(!props.cinemaScreenings){
-    return <p>Waiting to load</p>
+    return null;
   }
 
-  const screenings = props.cinemaScreenings.map((film) => {
+  function handleScreeningSelection(time) {
+    props.handleTimeSelection(time);
+  }
+
+  const screenings = props.cinemaScreenings.map((film, index) => {
     return (
 
-      <li className="screening-list-item">
-      <FilmScreenings title={film.title} times={film.times}/>
+      <li className="screening-list-item" key={index}>
+      <FilmScreenings title={film.title} times={film.times} handleScreeningSelection={handleScreeningSelection}/>
       </li>
   )
   })
 
-return (
 
+return (
+  <div>
+  <p>Please select a screening time for {props.cinemaName.name} below:</p>
   <ul className="screenings-list">
     {screenings}
     </ul>
+    </div>
 )
 
 }
