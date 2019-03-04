@@ -7,7 +7,7 @@ import MainHeader from '../components/main/MainHeader.js';
 // import Quote from '../components/main/Quote.js';
 
 import PostcodeSearchResult from './PostcodeSearchResult.js';
-import CinemaTimes from '../components/film_search/CinemaTimes';
+import CinemaTimesContainer from './CinemaTimesContainer';
 import CinemaSearchResult from './CinemaSearchResult.js';
 // import FilmSearchResult from './FilmSearchResult.js';
 // import SelectedScreening from './SelectedScreening.js';
@@ -109,7 +109,7 @@ class MainContainer extends Component {
         <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
         onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
         <CinemaSearchResult cinemaScreenings={this.state.currentCinema} />
-        <CinemaTimes cinemaInformation={this.state} />
+        <CinemaTimesContainer cinemaInformation={this.state} />
         </div>
     );
   }
