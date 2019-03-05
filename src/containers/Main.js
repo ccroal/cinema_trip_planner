@@ -20,6 +20,7 @@ class MainContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
+      searchedPostcode: "",
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
       uniqueFilmNames: [],
@@ -38,6 +39,7 @@ class MainContainer extends Component {
     this.setSelectedCinemaDetails = this.setSelectedCinemaDetails.bind(this);
     this.handleTimeSelection = this.handleTimeSelection.bind(this);
     this.setObject = this.setObject.bind(this);
+    this.isPostcodeEntered = this.isPostcodeEntered.bind(this);
   }
 
 
@@ -77,7 +79,7 @@ class MainContainer extends Component {
 
   handlePostcodeInput(postcode) {
     const request = new Request();
-    console.log('postcode: ', postcode);
+    this.setState({searchedPostcode: postcode})
     const url = 'https://api.cinelist.co.uk/search/cinemas/postcode/' + postcode;
     console.log(url);
     request.get(url).then((data) => {
@@ -137,23 +139,59 @@ class MainContainer extends Component {
     this.setSelectedCinemaDetails(cinema_id);
   }
 
+  isPostcodeEntered(){
+    if(this.state.searchedPostcode){
+      return (
+        <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
+        onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
+      )
+    };
+
+  }
+
   render() {
     return (
       <div>
+
       <MainHeader title="This is our app!" />
       <Search onPostcodeSubmit={this.handlePostcodeInput}/>
-      <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
-      onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
+      {this.isPostcodeEntered()}
+
 
       <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} selectedCinema={this.state.selectedCinema} />
-
-      <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject}/>
-
       <CinemaTimesContainer cinemaInformation={this.state} handleTimeSelection={this.handleTimeSelection}/>
+
+      <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject} searchedPostcode={this.state.searchedPostcode}/>
+
 
       </div>
     );
   }
+  //
+  // //1.  when user enters the app- only main header and search components displaying
+  // <MainHeader title="This is our app!" />
+  // <Search onPostcodeSubmit={this.handlePostcodeInput}/>
+  //
+  // //2.  user enters postcode - then PostcodeSearchResultContainer will render
+  //
+  // <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
+  // onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
+  //
+  // //3.  user will search either by film title or cinema
+  // //(conside how to disable other serach dropdown)
+  //
+  // <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} selectedCinema={this.state.selectedCinema} />
+  //
+  // <CinemaTimesContainer cinemaInformation={this.state} handleTimeSelection={this.handleTimeSelection}/>
+  //
+  // //4.  once user has selected a screening time, remove CinemaSearchResult and CinemaTimesContainer
+  //
+  // <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject} searchedPostcode={this.state.searchedPostcode}/>
+
+
+
+
+
 
   // <Router>
   // <Fragment>
