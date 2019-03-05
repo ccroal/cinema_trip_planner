@@ -20,6 +20,7 @@ class MainContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
+      searchedPostcode: "",
       cinemasByPostcode: [],
       allMoviesAndCinemas: [],
       uniqueFilmNames: [],
@@ -77,7 +78,7 @@ class MainContainer extends Component {
 
   handlePostcodeInput(postcode) {
     const request = new Request();
-    console.log('postcode: ', postcode);
+    this.setState({searchedPostcode: postcode})
     const url = 'https://api.cinelist.co.uk/search/cinemas/postcode/' + postcode;
     console.log(url);
     request.get(url).then((data) => {
@@ -147,7 +148,7 @@ class MainContainer extends Component {
 
       <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} selectedCinema={this.state.selectedCinema} />
 
-      <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject}/>
+      <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject} searchedPostcode={this.state.searchedPostcode}/>
 
       <CinemaTimesContainer cinemaInformation={this.state} handleTimeSelection={this.handleTimeSelection}/>
 
