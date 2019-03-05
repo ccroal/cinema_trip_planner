@@ -37,7 +37,7 @@ class Search extends Component {
       <input type="text" placeholder="Your postcode here..." value={this.state.postcode} onChange={this.handlePostcodeChange}/>
       </label>
 
-      <input type="submit" value="View cinemas and films in your area" />
+      <input className="submit-postcode" type="submit" value="View cinemas and films in your area" />
       </form>
     )
   }
