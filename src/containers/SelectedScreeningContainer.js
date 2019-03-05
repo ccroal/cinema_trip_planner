@@ -10,7 +10,6 @@ class SelectedScreeningContainer extends Component {
     super(props);
   }
 
-
   render(){
     if(!this.props.routeObject){
       return null

@@ -130,7 +130,7 @@ class MainContainer extends Component {
         const postcode = this.state.selectedFinalObject.cinemaDetails.postcode
         const regex = / /g;
         const amendedPostcode = postcode.replace(regex, '');
-        this.getTransportRoute(amendedPostcode);
+        // this.getTransportRoute(amendedPostcode);
       })
     }
 
@@ -151,7 +151,7 @@ class MainContainer extends Component {
   }
 
   isPostcodeEntered(){
-    if(this.state.searchedPostcode){
+    if(this.state.searchedPostcode && !this.state.selectedFinalObject){
       return (
         <PostcodeSearchResult cinemaList={this.state.cinemasByPostcode}
         onCinemaSelected={this.handleCinemaSelected} uniqueFilmsList={this.state.uniqueFilmNames} onFilmSelected={this.handleFilmChange}/>
@@ -159,6 +159,23 @@ class MainContainer extends Component {
     };
 
   }
+
+  isTimeSelected(){
+    if(!this.state.selectedFinalObject){
+      return (
+        <div>
+        <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} selectedCinema={this.state.selectedCinema} />
+        <CinemaTimesContainer cinemaInformation={this.state} handleTimeSelection={this.handleTimeSelection}/>
+        </div>
+      )} else {
+        return (
+          <div>
+          <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject} searchedPostcode={this.state.searchedPostcode} routeObject={this.state.routeObject}/>
+          </div>
+        )
+      }
+    }
+
 
   getTransportRoute(endPostCode){
     const request = new Request();
@@ -168,20 +185,16 @@ class MainContainer extends Component {
     })
   }
 
+
+
   render() {
     return (
       <div>
-
       <MainHeader title="This is our app!" />
       <Search onPostcodeSubmit={this.handlePostcodeInput}/>
       {this.isPostcodeEntered()}
 
-
-      <CinemaSearchResult cinemaScreenings={this.state.currentCinemaListings} handleTimeSelection={this.handleTimeSelection} selectedCinema={this.state.selectedCinema} />
-      <CinemaTimesContainer cinemaInformation={this.state} handleTimeSelection={this.handleTimeSelection}/>
-
-      <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject} searchedPostcode={this.state.searchedPostcode} routeObject={this.state.routeObject}/>
-
+      {this.isTimeSelected()}
 
       </div>
     );
