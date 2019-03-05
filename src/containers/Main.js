@@ -139,7 +139,7 @@ class MainContainer extends Component {
     const finalObject = {
       screeningTime: time,
       filmTitle: filmTitle,
-      cinemaDetails: cinemaDetails
+      cinemaDetails: cinemaDetails,
     }
     this.setState({selectedFinalObject: finalObject})
 
@@ -170,7 +170,7 @@ class MainContainer extends Component {
       )} else {
         return (
           <div>
-          <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject} searchedPostcode={this.state.searchedPostcode}/>
+          <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject} searchedPostcode={this.state.searchedPostcode} routeObject={this.state.routeObject}/>
           </div>
         )
       }
@@ -193,7 +193,9 @@ class MainContainer extends Component {
       <MainHeader title="This is our app!" />
       <Search onPostcodeSubmit={this.handlePostcodeInput}/>
       {this.isPostcodeEntered()}
+
       {this.isTimeSelected()}
+
       </div>
     );
   }
