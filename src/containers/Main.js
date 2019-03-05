@@ -189,8 +189,8 @@ class MainContainer extends Component {
 
   render() {
     return (
-      <div>
-      <MainHeader title="This is our app!" />
+      <div className="main-container">
+      <MainHeader title="Now Showing..." />
       <Search onPostcodeSubmit={this.handlePostcodeInput}/>
       {this.isPostcodeEntered()}
 
