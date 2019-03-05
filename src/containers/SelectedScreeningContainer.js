@@ -20,11 +20,13 @@ class SelectedScreeningContainer extends Component {
     })
   }
 
+// this.getTransportRoute(this.props.searchedPostcode, this.props.selectedFinalObject.cinemaDetails.postcode)
+
   render(){
     if(!this.props.selectedFinalObject){
       return null
-      )
-      getTransportRoute(this.props.searchedPostcode, this.props.selectedFinalObject.cinemaDetails.postcode)
+    }
+
     return (
       <div>
         <SelectedScreeningComponent finalObject={this.props.selectedFinalObject} routeObject={this.state.routeObject}/>
