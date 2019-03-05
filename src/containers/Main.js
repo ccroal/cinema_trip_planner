@@ -130,7 +130,7 @@ class MainContainer extends Component {
         const postcode = this.state.selectedFinalObject.cinemaDetails.postcode
         const regex = / /g;
         const amendedPostcode = postcode.replace(regex, '');
-        // this.getTransportRoute(amendedPostcode);
+        this.getTransportRoute(amendedPostcode);
       })
     }
 
