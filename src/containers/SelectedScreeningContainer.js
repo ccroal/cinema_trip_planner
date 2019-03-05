@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SelectedScreeningComponent from '../components/final_results/SelectedScreeningComponent.js';
+import TransportComponent from '../components/final_results/TransportComponent.js'
 
 import Request from '../helpers/request.js'
 
@@ -7,20 +8,18 @@ class SelectedScreeningContainer extends Component {
 
   constructor(props){
     super(props);
-    this.state = {
-      routeObject: null
-    }
   }
 
 
   render(){
-    if(!this.props.selectedFinalObject){
+    if(!this.props.routeObject){
       return null
     }
 
     return (
       <div>
-        <SelectedScreeningComponent finalObject={this.props.selectedFinalObject} routeObject={this.state.routeObject}/>
+        <SelectedScreeningComponent finalObject={this.props.selectedFinalObject}/>
+        <TransportComponent routeObject={this.props.routeObject} />
       </div>
     )
   }
