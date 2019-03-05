@@ -12,7 +12,6 @@ class SelectedScreeningContainer extends Component {
     }
   }
 
-
   render(){
     if(!this.props.selectedFinalObject){
       return null

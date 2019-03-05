@@ -174,6 +174,7 @@ class MainContainer extends Component {
 
       <MainHeader title="This is our app!" />
       <Search onPostcodeSubmit={this.handlePostcodeInput}/>
+
       {this.isPostcodeEntered()}
 
 
@@ -181,7 +182,6 @@ class MainContainer extends Component {
       <CinemaTimesContainer cinemaInformation={this.state} handleTimeSelection={this.handleTimeSelection}/>
 
       <SelectedScreeningContainer selectedFinalObject={this.state.selectedFinalObject} searchedPostcode={this.state.searchedPostcode}/>
-
 
       </div>
     );
