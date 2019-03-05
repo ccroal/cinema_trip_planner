@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import Request from '../helpers/request';
+import Config from '../config.js';
 // import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import Search from '../components/main/Search.js';
@@ -26,7 +27,8 @@ class MainContainer extends Component {
       uniqueFilmNames: [],
       selectedFilm: null,
       currentCinemaListings: null,
-      selectedFinalObject: null
+      selectedFinalObject: null,
+      routeObject: null
     }
 
     this.loadFilms = this.loadFilms.bind(this);
@@ -40,6 +42,7 @@ class MainContainer extends Component {
     this.handleTimeSelection = this.handleTimeSelection.bind(this);
     this.setObject = this.setObject.bind(this);
     this.isPostcodeEntered = this.isPostcodeEntered.bind(this);
+    this.getTransportRoute = this.getTransportRoute.bind(this);
   }
 
 
@@ -122,8 +125,15 @@ class MainContainer extends Component {
       return data;
     }).then((data) => {
       this.setObject(time, filmTitle, data)
-    });
-  }
+      })
+      .then(() => {
+        const postcode = this.state.selectedFinalObject.cinemaDetails.postcode
+        const regex = / /g;
+        const amendedPostcode = postcode.replace(regex, '');
+        this.getTransportRoute(amendedPostcode);
+      })
+    }
+
 
   setObject(time, filmTitle, cinemaDetails) {
     const finalObject = {
@@ -132,6 +142,7 @@ class MainContainer extends Component {
       cinemaDetails: cinemaDetails
     }
     this.setState({selectedFinalObject: finalObject})
+
   }
 
   handleCinemaSelected(cinema_id){
@@ -147,6 +158,14 @@ class MainContainer extends Component {
       )
     };
 
+  }
+
+  getTransportRoute(endPostCode){
+    const request = new Request();
+    const url = `https://transportapi.com/v3/uk/public/journey/from/postcode:${this.state.searchedPostcode}/to/postcode:${endPostCode}.json?app_id=${Config.appId}&app_key=${Config.apiKey}&service=southeast`
+    request.get(url).then((data) => {
+      this.setState({routeObject: data})
+    })
   }
 
   render() {
