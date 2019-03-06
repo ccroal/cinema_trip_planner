@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FilmScreenings from '../components/cinema_search/FilmScreenings.js';
 
 const CinemaSearchResult = (props) => {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SelectedScreeningComponent from '../components/final_results/SelectedScreeningComponent.js';
 import TransportComponent from '../components/final_results/TransportComponent.js'
 
-import Request from '../helpers/request.js'
+
 
 class SelectedScreeningContainer extends Component {
 

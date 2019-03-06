@@ -1,1 +1,0 @@
-  //display map if possible

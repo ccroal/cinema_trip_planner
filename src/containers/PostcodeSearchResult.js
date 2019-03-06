@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import CinemaPostcodeSearchList from '../components/postcode_search/CinemaPostcodeSearchList.js';
-import FilmPostcodeSearchList from '../components/postcode_search/FilmPostcodeSearchList.js';
+
 
 class PostcodeSearchResult extends Component {
 

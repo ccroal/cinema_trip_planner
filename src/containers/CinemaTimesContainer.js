@@ -12,9 +12,9 @@ const CinemaTimesContainer = (props) => {
       const allCinemas = props.cinemaInformation.cinemasByPostcode;
 
       props.cinemaInformation.allMoviesAndCinemas.results.map((cinemaObject)=>{
-      cinemaObject.listings.map((listing) => {
+       cinemaObject.listings.map((listing) => {
         if(props.cinemaInformation.selectedFilm === listing.title){
-          listingsData.push({cinemaid: cinemaObject.cinema, listings: listing})
+          return listingsData.push({cinemaid: cinemaObject.cinema, listings: listing})
           }
         })
       })

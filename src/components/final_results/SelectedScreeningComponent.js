@@ -10,7 +10,7 @@ const SelectedScreeningComponent = (props) => {
   const regex = /<br \/> /g;
   const amendedAddress = address.replace(regex, '');
 
-  
+
 
   return(
     <div className="selected-screening-component-div">
@@ -23,7 +23,6 @@ const SelectedScreeningComponent = (props) => {
 
 
   )
-  //display film title, cinema Name, cinema address
 
 }
 
