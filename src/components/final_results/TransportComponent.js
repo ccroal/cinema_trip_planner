@@ -14,9 +14,10 @@ const TransportComponent = (props) => {
   }
 
   function routeParts(route){
-    const routeParts = route.route_parts.map((routepart) => {
+    const routeParts = route.route_parts.map((routepart, index) => {
       return(
         <div className="route-part-div">
+          <p>journey Part: {index + 1}</p>
           <p>Mode: {routepart.mode} {routepart.line_name} </p>
           <p>From: {routepart.from_point_name}</p>
           <p>To: {routepart.to_point_name}</p>

@@ -3,7 +3,6 @@ import React from 'react';
 const CinemaAndTimes = (props) => {
 
   function getCinemaName(){
-    console.log('cinemaname', props.cinemaAndTimes);
      const cinemaName = props.allCinemaData.map((cinema) => {
       if(cinema.id === props.cinemaAndTimes.cinemaid)
       return cinema.name
