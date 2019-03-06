@@ -1,3 +1,9 @@
+An app that allows a user to search for real time cinema times and details transport links to the selected cinema.
+
+Built using React with Cinelist API and TransportAPI.
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
