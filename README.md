@@ -1,4 +1,4 @@
-An app that allows a user to search for real time cinema times and details transport links to the selected cinema.
+An app that allows a user to search for real time cinema information and details transport links to the selected cinema.
 
 Built using React with Cinelist API and TransportAPI.
 
