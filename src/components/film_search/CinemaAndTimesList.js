@@ -19,9 +19,12 @@ const CinemaAndTimesList = (props) => {
 
 
   return(
+    <div className="cinema-film-selection">
+    <h1>Select a screening time for '{props.allListingsData[0].listings.title}'</h1>
     <ul className="cinema-and-times-list-component" >
       {cinemasAndTimesList}
     </ul>
+    </div>
   )
 }
 

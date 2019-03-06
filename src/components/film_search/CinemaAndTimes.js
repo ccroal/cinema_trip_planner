@@ -18,15 +18,15 @@ const CinemaAndTimes = (props) => {
 
   function displayScreenings(){
     const times = props.cinemaAndTimes.listings.times.map((time, index) => {
-    return <button onClick={onSelection} value={time} key={index}>{time}</button>
+    return <button className="time-button" onClick={onSelection} value={time} key={index}>{time}</button>
   })
   return times
   }
 
   return(
     <div className="cinema-and-time-component">
-      <h1>Cinema: {getCinemaName()}</h1>
-      <ul>Times: {displayScreenings()}</ul>
+      <h4>{getCinemaName()}</h4>
+      <ul>{displayScreenings()}</ul>
     </div>
   )
 }

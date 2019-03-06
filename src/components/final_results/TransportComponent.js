@@ -7,7 +7,7 @@ const TransportComponent = (props) => {
     const route = props.routeObject.routes.shift()
      return(
        <div className="route-div">
-        <p>Duration: {route.duration}</p>
+        <p>Total Journey Time: {route.duration}</p>
         {routeParts(route)}
        </div>
       )
@@ -17,6 +17,7 @@ const TransportComponent = (props) => {
     const routeParts = route.route_parts.map((routepart, index) => {
       return(
         <div className="route-part-div">
+        <br/>
           <p>journey Part: {index + 1}</p>
           <p>Mode: {routepart.mode} {routepart.line_name} </p>
           <p>From: {routepart.from_point_name}</p>

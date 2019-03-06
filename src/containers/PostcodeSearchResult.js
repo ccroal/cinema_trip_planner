@@ -32,7 +32,7 @@ class PostcodeSearchResult extends Component {
       return null
     }
     const cinemas = this.props.cinemaList.map((cinema, index) => {
-      return <option value={cinema.id} key={index}>{cinema.name},{cinema.distance} miles</option>
+      return <option value={cinema.id} key={index}>{cinema.name} ({cinema.distance} miles)</option>
     })
     return cinemas;
   }
@@ -53,11 +53,11 @@ class PostcodeSearchResult extends Component {
     if (!this.state.selectedCinema && !this.state.selectedFilm) {
       return(
         <div>
+        <p className="choose-dropdown-sentence-p">Select a film or cinema</p>
         <select id="film-selector" defaultValue="default" onChange={this.handleFilmChange}>
         <option disabled value="default">Choose a Film...</option>
         {this.populateFilmDropdown()}
         </select>
-
         <select id="cinema-selector" defaultValue="default"
         onChange={this.handleCinemaChange}>
         <option disabled value="default">Choose a Cinema</option>
@@ -86,7 +86,7 @@ class PostcodeSearchResult extends Component {
 
         render(){
           return(
-            <div>
+            <div className="dropdowns">
             {this.checkDropdownSelected()}
             </div>
           )

@@ -22,8 +22,8 @@ const CinemaSearchResult = (props) => {
 
 
 return (
-  <div>
-  <p>Please select a screening time for {props.selectedCinema.name} below:</p>
+  <div className="cinema-film-selection">
+  <h1>Select a screening time for {props.selectedCinema.name} below:</h1>
   <ul className="screenings-list">
     {screenings}
     </ul>

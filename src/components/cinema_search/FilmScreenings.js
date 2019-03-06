@@ -18,7 +18,7 @@ const FilmScreenings = (props) => {
 
   return (
     <div>
-    <p>{props.title}</p>
+    <h4>{props.title}</h4>
     {allTimings}
     </div>
   )

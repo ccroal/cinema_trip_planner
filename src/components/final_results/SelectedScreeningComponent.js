@@ -15,10 +15,10 @@ const SelectedScreeningComponent = (props) => {
   return(
     <div className="selected-screening-component-div">
     <h1>{props.finalObject.filmTitle}</h1>
-    <h1>{props.finalObject.screeningTime}</h1>
-    <h1>{props.finalObject.cinemaDetails.name}</h1>
-    <h1>{amendedAddress}, {props.finalObject.cinemaDetails.postcode}</h1>
-    <a href={props.finalObject.cinemaDetails.website}>Book your tickets here</a>
+    <h2>{props.finalObject.screeningTime}</h2>
+    <h2>{props.finalObject.cinemaDetails.name}</h2>
+    <h2>{amendedAddress}, {props.finalObject.cinemaDetails.postcode}</h2>
+    <a href={props.finalObject.cinemaDetails.website} target="blank">Book your tickets here</a>
     </div>
 
 

@@ -24,11 +24,7 @@ const CinemaTimesContainer = (props) => {
       }
 
     return(
-        <ul className="cinema-and-times-list">
-          <li className="cinema-and-times-list-itme">
           <CinemaAndTimesList allListingsData={listingsData} allCinemaData={allCinemas} timeSelection={handleSelectedTime}/>
-          </li>
-        </ul>
     )
 }
 

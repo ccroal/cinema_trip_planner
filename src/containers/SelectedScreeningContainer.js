@@ -30,11 +30,14 @@ class SelectedScreeningContainer extends Component {
   render(){
 
     if(!this.props.routeObject){
-        return this.randomQuotes()
-          }
-
+        return(
+          <div className="random-quote">
+         {this.randomQuotes()}
+         </div>
+        )
+      }
     return (
-      <div>
+      <div className="final-page-div">
         <SelectedScreeningComponent finalObject={this.props.selectedFinalObject}/>
         <TransportComponent routeObject={this.props.routeObject} />
       </div>
