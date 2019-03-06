@@ -51,11 +51,48 @@ body{
   /* background-color: blue; */
 }
 
+.postcode-input{
+  background-color: white;
+  padding: 10px;
+  border-radius: 6px;
+  margin-left: 10px;
+  color: black;
+  font-family: Cinema;
+  font-size: 15px;
+  text-align: center;
+
+
+
+}
+
+.postcode-search-button{
+  background-color: rgba(232, 181, 181, 0.6);
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-left: 10px;
+  color: black;
+  font-family: Cinema;
+  font-size: 15px;
+
+}
+
+/* .time-button{
+  background-color: blue;
+} */
+
 .postcode-search {
   /* background-color: green; */
-  margin-left: 50px;
-  padding-right: 10px;
-  color: white;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  color: #d4ada7;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 0.1px;
+  font-size: 26px;
+  font-weight: bold;
+
+
+
 }
 
 .postcode-search-dropdowns{
@@ -80,10 +117,6 @@ body{
 
 #cinema-selector{
   background-color: purple;
-}
-
-button{
-  background-color: pink;
 }
 
 @keyframes App-logo-spin {

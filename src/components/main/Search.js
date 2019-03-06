@@ -34,10 +34,10 @@ class Search extends Component {
 
       <label>
       Please enter your postcode:
-      <input type="text" placeholder="Your postcode here..." value={this.state.postcode} onChange={this.handlePostcodeChange}/>
+      <input className="postcode-input" type="text" placeholder="Your postcode here..." value={this.state.postcode} onChange={this.handlePostcodeChange}/>
       </label>
 
-      <input type="submit" value="View cinemas and films in your area" />
+      <button className="postcode-search-button" type="submit">View cinemas and films in your area</button>
       </form>
     )
   }

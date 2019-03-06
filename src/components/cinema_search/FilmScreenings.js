@@ -13,7 +13,7 @@ const FilmScreenings = (props) => {
   }
 
   const allTimings = props.times.map((time, index) => {
-    return <button onClick={onSelection} value={time} key={index}>{time}</button>
+    return <button className="time-button" onClick={onSelection} value={time} key={index}>{time}</button>
   })
 
   return (
