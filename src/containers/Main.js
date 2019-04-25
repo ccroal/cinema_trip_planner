@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Request from '../helpers/request';
 
 
+
 import Search from '../components/main/Search.js';
 import MainHeader from '../components/main/MainHeader.js';
 
@@ -170,7 +171,7 @@ class MainContainer extends Component {
 
   getTransportRoute(endPostCode){
     const request = new Request();
-    const url = `https://transportapi.com/v3/uk/public/journey/from/postcode:${this.state.searchedPostcode}/to/postcode:${endPostCode}.json?app_id=${process.env.apiKey}&app_key=${process.env.appId}&service=southeast`
+    const url = `https://transportapi.com/v3/uk/public/journey/from/postcode:${this.state.searchedPostcode}/to/postcode:${endPostCode}.json?app_id=${process.env.appId}&app_key=${process.env.apiKey}&service=southeast`
     request.get(url).then((data) => {
       this.setState({routeObject: data})
     })
