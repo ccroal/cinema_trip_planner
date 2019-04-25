@@ -170,7 +170,7 @@ class MainContainer extends Component {
 
   getTransportRoute(endPostCode){
     const request = new Request();
-    const url = `https://transportapi.com/v3/uk/public/journey/from/postcode:${this.state.searchedPostcode}/to/postcode:${endPostCode}.json?app_id=${process.env.REACT_APP_apiKey}&app_key=${process.env.REACT_APP_appId}&service=southeast`
+    const url = `https://transportapi.com/v3/uk/public/journey/from/postcode:${this.state.searchedPostcode}/to/postcode:${endPostCode}.json?app_id=${process.env.apiKey}&app_key=${process.env.appId}&service=southeast`
     request.get(url).then((data) => {
       this.setState({routeObject: data})
     })
